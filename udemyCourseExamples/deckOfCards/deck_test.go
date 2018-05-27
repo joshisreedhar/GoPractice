@@ -53,3 +53,18 @@ func Test_DeckShouldPrintItSelf(t *testing.T) {
 		t.Errorf("Cards are wrongly represented as string. Expected %v got %v", stringCards, cards.toString())
 	}
 }
+
+func Test_ShouldBeAbleToDealAHandFromDeck(t *testing.T) {
+
+	cards := newDeck()
+	handSize := 6
+	deal, deck := deal(cards, handSize)
+
+	if len(deal) != handSize {
+		t.Errorf("Invalid deal hand size, Expected %v got %v", handSize, len(deal))
+	}
+
+	if len(deck) != len(cards)-len(deal) {
+		t.Errorf("invalid deck size, deal was not cut")
+	}
+}
