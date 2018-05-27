@@ -34,11 +34,22 @@ func Test_ASuitShouldHave13Cards(t *testing.T) {
 			if strings.HasSuffix(card, suit) {
 				suitCount = suitCount + 1
 			}
+
 		}
 
 		if suitCount != 13 {
 			t.Errorf("%v does not have 13 cards", suit)
 		}
 		suitCount = 0
+	}
+}
+
+func Test_DeckShouldPrintItSelf(t *testing.T) {
+	stringCards := "A♠, 2♠, 3♠, 4♠, 5♠, 6♠, 7♠, 8♠, 9♠, 10♠, J♠, Q♠, K♠, A♥, 2♥, 3♥, 4♥, 5♥, 6♥, 7♥, 8♥, 9♥, 10♥, J♥, Q♥, K♥, A♣, 2♣, 3♣, 4♣, 5♣, 6♣, 7♣, 8♣, 9♣, 10♣, J♣, Q♣, K♣, A♦, 2♦, 3♦, 4♦, 5♦, 6♦, 7♦, 8♦, 9♦, 10♦, J♦, Q♦, K♦"
+
+	cards := newDeck()
+
+	if cards.toString() != stringCards {
+		t.Errorf("Cards are wrongly represented as string. Expected %v got %v", stringCards, cards.toString())
 	}
 }
