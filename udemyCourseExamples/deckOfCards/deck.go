@@ -40,8 +40,8 @@ func shuffle(d deck) deck {
 	return shuffledDeck
 }
 
-func save(d deck) {
-	ioutil.WriteFile("_deckfile", []byte(d.toString()), 0644)
+func save(d deck, f string) {
+	ioutil.WriteFile(f, []byte(d.toString()), 0644)
 }
 
 func main() {}

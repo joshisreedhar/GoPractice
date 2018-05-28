@@ -103,7 +103,7 @@ func Test_ShouldBeAbleToShuffleADeal(t *testing.T) {
 func Test_CanSaveADeckToFile(t *testing.T) {
 	d := newDeck()
 	f := "_deckfile"
-	save(d)
+	save(d, f)
 	_, err := ioutil.ReadFile(f)
 	if err != nil {
 		t.Errorf("could not write to file")
@@ -114,7 +114,7 @@ func Test_CanSaveADeckToFile(t *testing.T) {
 func Test_SavedDeckFileHasRightContent(t *testing.T) {
 	d := newDeck()
 	f := "_deckfile"
-	save(d)
+	save(d, f)
 	content, err := ioutil.ReadFile(f)
 	if err == nil && string(content) != d.toString() {
 		t.Errorf("Written file content is not correct")
