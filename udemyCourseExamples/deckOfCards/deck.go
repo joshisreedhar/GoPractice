@@ -54,5 +54,3 @@ func deckFromFile(f string) deck {
 
 	return deck(cards)
 }
-
-func main() {}
