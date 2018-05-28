@@ -1,7 +1,9 @@
 package main
 
 import (
+	"math/rand"
 	"strings"
+	"time"
 )
 
 type deck []string
@@ -25,6 +27,16 @@ func (d deck) toString() string {
 
 func deal(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
+}
+
+func shuffle(d deck) deck {
+	shuffledDeck := d
+	r := rand.New(rand.NewSource(time.Now().Unix()))
+	for index := range d {
+		randomIndex := r.Intn(len(d) - 1)
+		shuffledDeck[index], shuffledDeck[randomIndex] = shuffledDeck[randomIndex], shuffledDeck[index]
+	}
+	return shuffledDeck
 }
 
 func main() {}

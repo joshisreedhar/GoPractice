@@ -68,3 +68,59 @@ func Test_ShouldBeAbleToDealAHandFromDeck(t *testing.T) {
 		t.Errorf("invalid deck size, deal was not cut")
 	}
 }
+
+func Test_ShouldBeAbleToRandomlyShuffleADeck(t *testing.T) {
+	cards := newDeck()
+	shuffledCards := shuffle(cards)
+
+	if !areCardsShuffled(shuffledCards) {
+		t.Errorf("Cards were not shuffled properly, found majority cards with same suit together")
+	}
+
+}
+
+func areCardsShuffled(d deck) bool {
+	cardCount := 0
+	immediateCardCount := 0
+	cardSuit := ""
+	previousCardSuit := ""
+	randomLimit := len(d) / 2
+
+	for _, card := range d {
+
+		cardSuit = card[1:]
+		cardCount = cardCount + 1
+		if cardSuit == previousCardSuit {
+			immediateCardCount = immediateCardCount + 1
+		} else {
+			immediateCardCount = 1
+		}
+
+		if cardCount == randomLimit {
+			if immediateCardCount == randomLimit {
+				return false
+			}
+			cardCount = 0
+		}
+	}
+	return true
+}
+
+func Test_ShouldBeAbleToShuffleADeal(t *testing.T) {
+	d := newDeck()
+
+	hand, deck := deal(d, 5)
+
+	shuffledHand := shuffle(hand)
+
+	shuffledDeck := shuffle(deck)
+
+	if !areCardsShuffled(shuffledHand) {
+		t.Errorf("Hand not shuffled properly")
+	}
+
+	if !areCardsShuffled(shuffledDeck) {
+		t.Errorf("Remaining deck not shuffled properly")
+	}
+
+}
