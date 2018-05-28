@@ -44,4 +44,15 @@ func save(d deck, f string) {
 	ioutil.WriteFile(f, []byte(d.toString()), 0644)
 }
 
+func deckFromFile(f string) deck {
+	cards := []string{}
+	c, err := ioutil.ReadFile(f)
+
+	if err == nil {
+		cards = strings.Split(string(c), ", ")
+	}
+
+	return deck(cards)
+}
+
 func main() {}

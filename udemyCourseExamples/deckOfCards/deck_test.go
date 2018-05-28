@@ -122,6 +122,18 @@ func Test_SavedDeckFileHasRightContent(t *testing.T) {
 	os.Remove(f)
 }
 
+func Test_CanRestoreDeckStateFromFile(t *testing.T) {
+	d := newDeck()
+	shuffledDeck := shuffle(d)
+	f := "a.txt"
+	save(shuffledDeck, f)
+	restoredDeck := deckFromFile(f)
+	if restoredDeck.toString() != shuffledDeck.toString() {
+		t.Errorf("Cannot restore deck from file")
+	}
+	os.Remove(f)
+}
+
 func areCardsShuffled(d deck) bool {
 	cardCount := 0
 	immediateCardCount := 0
