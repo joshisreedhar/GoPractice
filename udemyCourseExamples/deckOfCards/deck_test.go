@@ -1,6 +1,8 @@
 package main
 
 import (
+	"io/ioutil"
+	"os"
 	"strings"
 	"testing"
 )
@@ -79,6 +81,47 @@ func Test_ShouldBeAbleToRandomlyShuffleADeck(t *testing.T) {
 
 }
 
+func Test_ShouldBeAbleToShuffleADeal(t *testing.T) {
+	d := newDeck()
+
+	hand, deck := deal(d, 5)
+
+	shuffledHand := shuffle(hand)
+
+	shuffledDeck := shuffle(deck)
+
+	if !areCardsShuffled(shuffledHand) {
+		t.Errorf("Hand not shuffled properly")
+	}
+
+	if !areCardsShuffled(shuffledDeck) {
+		t.Errorf("Remaining deck not shuffled properly")
+	}
+
+}
+
+func Test_CanSaveADeckToFile(t *testing.T) {
+	d := newDeck()
+	f := "_deckfile"
+	save(d)
+	_, err := ioutil.ReadFile(f)
+	if err != nil {
+		t.Errorf("could not write to file")
+	}
+	os.Remove(f)
+}
+
+func Test_SavedDeckFileHasRightContent(t *testing.T) {
+	d := newDeck()
+	f := "_deckfile"
+	save(d)
+	content, err := ioutil.ReadFile(f)
+	if err == nil && string(content) != d.toString() {
+		t.Errorf("Written file content is not correct")
+	}
+	os.Remove(f)
+}
+
 func areCardsShuffled(d deck) bool {
 	cardCount := 0
 	immediateCardCount := 0
@@ -104,23 +147,4 @@ func areCardsShuffled(d deck) bool {
 		}
 	}
 	return true
-}
-
-func Test_ShouldBeAbleToShuffleADeal(t *testing.T) {
-	d := newDeck()
-
-	hand, deck := deal(d, 5)
-
-	shuffledHand := shuffle(hand)
-
-	shuffledDeck := shuffle(deck)
-
-	if !areCardsShuffled(shuffledHand) {
-		t.Errorf("Hand not shuffled properly")
-	}
-
-	if !areCardsShuffled(shuffledDeck) {
-		t.Errorf("Remaining deck not shuffled properly")
-	}
-
 }

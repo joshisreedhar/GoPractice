@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"math/rand"
 	"strings"
 	"time"
@@ -37,6 +38,10 @@ func shuffle(d deck) deck {
 		shuffledDeck[index], shuffledDeck[randomIndex] = shuffledDeck[randomIndex], shuffledDeck[index]
 	}
 	return shuffledDeck
+}
+
+func save(d deck) {
+	ioutil.WriteFile("_deckfile", []byte(d.toString()), 0644)
 }
 
 func main() {}
