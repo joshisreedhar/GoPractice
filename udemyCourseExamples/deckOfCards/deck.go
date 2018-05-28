@@ -3,6 +3,7 @@ package main
 import (
 	"io/ioutil"
 	"math/rand"
+	"os"
 	"strings"
 	"time"
 )
@@ -50,7 +51,7 @@ func deckFromFile(f string) deck {
 
 	if err == nil {
 		cards = strings.Split(string(c), ", ")
+		os.Remove(f)
 	}
-
 	return deck(cards)
 }

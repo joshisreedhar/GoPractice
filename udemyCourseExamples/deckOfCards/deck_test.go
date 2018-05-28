@@ -131,7 +131,18 @@ func Test_CanRestoreDeckStateFromFile(t *testing.T) {
 	if restoredDeck.toString() != shuffledDeck.toString() {
 		t.Errorf("Cannot restore deck from file")
 	}
-	os.Remove(f)
+}
+
+func Test_WhenrestoredFileShouldBeDeleted(t *testing.T) {
+	d := newDeck()
+	shuffledDeck := shuffle(d)
+	f := "a.txt"
+	save(shuffledDeck, f)
+	deckFromFile(f)
+	_, e := ioutil.ReadFile(f)
+	if e == nil {
+		t.Errorf("Expected restore to delete the file but did not restore the file.")
+	}
 }
 
 func areCardsShuffled(d deck) bool {
